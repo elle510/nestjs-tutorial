@@ -9,27 +9,27 @@ export class BoardController {
   constructor(private boardService: BoardService) {}
 
   @Get()
-  getAllBoard(): Board[] {
+  getAllBoard(): Promise<Board[]> {
     return this.boardService.getAllBoard();
   }
 
   @Post()
-  createBoard(@Body() createBoardDto: CreateBoardDto): Board {
+  createBoard(@Body() createBoardDto: CreateBoardDto): Promise<Board> {
     return this.boardService.createBoard(createBoardDto);
   }
 
   @Get('/:id')
-  getBoardById(@Param('id') id: string): Board {
+  getBoardById(@Param('id') id: string): Promise<Board> {
     return this.boardService.getBoardById(id);
   }
 
   @Delete('/:id')
-  deleteBoard(@Param('id') id: string): void {
-    this.boardService.deleteBoard(id);
+  deleteBoard(@Param('id') id: string): Promise<void> {
+    return this.boardService.deleteBoard(id);
   }
 
   @Patch('/:id/status')
-  updateBoardStatus(@Param('id') id: string, @Body('status') status: BoardStatus): Board {
+  updateBoardStatus(@Param('id') id: string, @Body('status') status: BoardStatus): Promise<Board> {
     return this.boardService.updateBoardStatus(id, status);
   }
 }
