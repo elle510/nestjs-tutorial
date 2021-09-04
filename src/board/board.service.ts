@@ -20,7 +20,7 @@ export class BoardService {
     return this.boardRepository.createBoard(createBoardDto);
   }
 
-  async getBoardById(id: string): Promise<Board> {
+  async getBoardById(id: number): Promise<Board> {
     const board = await this.boardRepository.findOne(id);
 
     if (!board) {
@@ -29,7 +29,7 @@ export class BoardService {
     return board;
   }
 
-  async deleteBoard(id: string): Promise<void> {
+  async deleteBoard(id: number): Promise<void> {
     const result = await this.boardRepository.delete(id);
 
     if (result.affected === 0) {
@@ -37,7 +37,7 @@ export class BoardService {
     }
   }
 
-  async updateBoardStatus(id: string, status: BoardStatus): Promise<Board> {
+  async updateBoardStatus(id: number, status: BoardStatus): Promise<Board> {
     const board: Board = await this.getBoardById(id);
     board.status = status;
 

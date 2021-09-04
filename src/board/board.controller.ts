@@ -1,3 +1,4 @@
+import { ParseIntPipe } from '@nestjs/common';
 import {
   Body,
   Controller,
@@ -31,18 +32,18 @@ export class BoardController {
   }
 
   @Get('/:id')
-  getBoardById(@Param('id') id: string): Promise<Board> {
+  getBoardById(@Param('id', ParseIntPipe) id: number): Promise<Board> {
     return this.boardService.getBoardById(id);
   }
 
   @Delete('/:id')
-  deleteBoard(@Param('id') id: string): Promise<void> {
+  deleteBoard(@Param('id', ParseIntPipe) id: number): Promise<void> {
     return this.boardService.deleteBoard(id);
   }
 
   @Patch('/:id/status')
   updateBoardStatus(
-    @Param('id') id: string,
+    @Param('id', ParseIntPipe) id: number,
     @Body('status', BoardStatusValidationPipe) status: BoardStatus,
   ): Promise<Board> {
     return this.boardService.updateBoardStatus(id, status);
