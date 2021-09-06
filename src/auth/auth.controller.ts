@@ -5,6 +5,8 @@ import { Controller, Post } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from './auth.service';
 import { AuthCredentialDto } from './dtos/auth-credential.dto';
+import { GetUser } from './get-user.decorator';
+import { User } from './user.entity';
 
 @Controller('auth')
 export class AuthController {
@@ -25,6 +27,12 @@ export class AuthController {
   @Post('/test')
   @UseGuards(AuthGuard()) // AuthGuard 사용한다는 것은 jwt.strategy 에서 토큰의 유효성을 체크하고 validate 함수에서 리턴하는 user 객체를 req 안에 넣는다는 것이다.
   test(@Req() req) {
-    console.log('req', req);
+    console.log('req', req); // req.user 로 user 객체 참조
+  }
+
+  @Post('/test1')
+  @UseGuards(AuthGuard())
+  test1(@GetUser() user: User) {
+    console.log('user', user);
   }
 }
