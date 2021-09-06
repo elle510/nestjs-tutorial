@@ -4,11 +4,14 @@ import { PassportModule } from '@nestjs/passport';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
+import { JwtStrategy } from './jwt.strategy';
 import { UserRepository } from './user.repository';
 
 @Module({
   imports: [
+    // 유저를 인증하기 위해 사용할 기본 strategy를 명시.
     PassportModule.register({ defaultStrategy: 'jwt' }),
+    // jwt 인증 부분을 담당. 주로 sign() 을 위한 부분이다.
     JwtModule.register({
       secret: 'Secret1234',
       signOptions: {
@@ -18,6 +21,8 @@ import { UserRepository } from './user.repository';
     TypeOrmModule.forFeature([UserRepository]),
   ],
   controllers: [AuthController],
-  providers: [AuthService],
+  providers: [AuthService, JwtStrategy],
+  // JwtStrategy, PassportModule 를 다른 모듈에서 사용할 수 있게 등록
+  exports: [JwtStrategy, PassportModule],
 })
 export class AuthModule {}
