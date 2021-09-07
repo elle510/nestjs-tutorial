@@ -29,6 +29,11 @@ export class BoardController {
     return this.boardService.getAllBoard();
   }
 
+  @Get('/me')
+  getBoardByMe(@GetUser() user: User): Promise<Board[]> {
+    return this.boardService.getBoardByMe(user);
+  }
+
   @Post()
   @UsePipes(ValidationPipe)
   createBoard(@Body() createBoardDto: CreateBoardDto, @GetUser() user: User): Promise<Board> {
