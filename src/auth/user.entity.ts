@@ -1,5 +1,5 @@
-import { Board } from 'src/board/board.entity';
 import { BaseEntity, Column, Entity, OneToMany, PrimaryGeneratedColumn, Unique } from 'typeorm';
+import { Board } from '../board/board.entity';
 
 @Entity()
 @Unique(['username'])
